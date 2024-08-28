@@ -1,0 +1,10 @@
+//
+//  Development.xcconfig
+//  NYTimesArticlesApp
+//
+//  Created by Ihsan Ullah on 26/08/2024.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+API_KEY = eObThYbFrZt2vrY4xH5JhAjrEDQYTGmv
