@@ -18,15 +18,16 @@ protocol ArticlesViewModelProtocol: AnyObject {
 }
 
 class ArticlesViewModel: ArticlesViewModelProtocol {
-    
     private let fetchMostPopularArticlesUseCase: FetchMostPopularArticlesUseCaseProtocol
-    
+    private let networkReachabilityService: NetworkReachabilityServiceProtocol
+
     @Published private(set) var articles: [DomainArticle] = []
     @Published private(set) var errorMessage: String?
     private var cancellables = Set<AnyCancellable>()
     
-    init(fetchMostPopularArticlesUseCase: FetchMostPopularArticlesUseCaseProtocol) {
+    init(fetchMostPopularArticlesUseCase: FetchMostPopularArticlesUseCaseProtocol, networkReachabilityService: NetworkReachabilityServiceProtocol) {
         self.fetchMostPopularArticlesUseCase = fetchMostPopularArticlesUseCase
+        self.networkReachabilityService = networkReachabilityService
     }
     
     var articlesPublisher: Published<[DomainArticle]>.Publisher {
@@ -38,6 +39,10 @@ class ArticlesViewModel: ArticlesViewModelProtocol {
     }
     
     func loadArticles(section: String, period: Int) {
+        guard networkReachabilityService.isReachable else {
+                    errorMessage = "No internet connection."
+                    return
+                }
         guard let endpoint = NYTimesEndpoint.mostViewedEndpoint(section: section, period: period) else {
             errorMessage = "Invalid endpoint"
             return

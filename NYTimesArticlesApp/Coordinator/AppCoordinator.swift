@@ -11,11 +11,14 @@ class AppCoordinator {
     private let window: UIWindow
     private let navigationController: UINavigationController
     private let articlesCoordinator: ArticlesCoordinator
+    private let networkReachabilityService: NetworkReachabilityServiceProtocol
+
     
     init(window: UIWindow) {
         self.window = window
         self.navigationController = UINavigationController()
-        self.articlesCoordinator = ArticlesCoordinator(navigationController: navigationController)
+        self.networkReachabilityService = NetworkReachabilityService()
+        self.articlesCoordinator = ArticlesCoordinator(navigationController: navigationController, networkReachabilityService: networkReachabilityService)
     }
     
     func start() {

@@ -12,10 +12,14 @@ class ArticlesCoordinatorTests: XCTestCase {
     
     var navigationController: UINavigationController!
     var coordinator: ArticlesCoordinator!
+    var mockNetworkReachabilityService: MockNetworkReachabilityService!
+
     override func setUp() {
         super.setUp()
         navigationController = UINavigationController()
-        coordinator = ArticlesCoordinator(navigationController: navigationController)
+        mockNetworkReachabilityService = MockNetworkReachabilityService()
+
+        coordinator = ArticlesCoordinator(navigationController: navigationController, networkReachabilityService: mockNetworkReachabilityService)
     }
     
     override func tearDown() {
